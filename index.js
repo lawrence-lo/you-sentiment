@@ -1,7 +1,6 @@
 const express = require('express')
 const path = require('path')
 const compression = require('compression')
-const helmet = require('helmet')
 require('dotenv').config()
 const { searchVideos, getVideos, getComments, getSentiment } = require('./api')
 
@@ -13,16 +12,6 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 app.use(express.static(path.join(__dirname, 'dist')))
 app.use(compression())
-app.use(helmet())
-app.use(
-  helmet.contentSecurityPolicy({
-    useDefaults: true,
-    directives: {
-      'img-src': ["'self'", 'i.ytimg.com'],
-      upgradeInsecureRequests: []
-    }
-  })
-)
 
 // Handle requests
 app.get('/', (req, res) => {
