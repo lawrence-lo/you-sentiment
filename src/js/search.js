@@ -49,9 +49,18 @@ function renderResults (keyword, orderBy, videosResponse) {
   let sentimentLabel = ''
   let sentimentText = ''
   let sentimentClass = ''
+  let videoTitle = ''
+  let videoId = ''
+  let videoDescription = ''
+  let thumbnailUrl = ''
+  let channelId = ''
+  let channelTitle = ''
+  let viewCount = ''
+  let likeCount = ''
+  let publishedAt = ''
 
   for (let i = 0; i < videosResponse.videos.items.length; i++) {
-    // Setup variables for sentiment display
+    // Variables for sentiment display
     if (videosResponse.hasComments[i]) {
       sentimentLabel = videosResponse['comments' + commentsCounter].sentiment.label
       sentimentPercentage = Math.trunc(videosResponse['comments' + commentsCounter].sentiment.probability[sentimentLabel] * 100)
@@ -64,8 +73,63 @@ function renderResults (keyword, orderBy, videosResponse) {
       sentimentClass = 'bg-warning'
     }
 
+    // Variables for video details
+    if (videosResponse.videos.items[i].snippet.title) {
+      videoTitle = videosResponse.videos.items[i].snippet.title
+    } else {
+      videoTitle = 'NIL'
+    }
+
+    if (videosResponse.videos.items[i].id) {
+      videoId = videosResponse.videos.items[i].id
+    } else {
+      videoId = 'NIL'
+    }
+
+    if (videosResponse.videos.items[i].snippet.description) {
+      videoDescription = videosResponse.videos.items[i].snippet.description
+    } else {
+      videoDescription = 'NIL'
+    }
+
+    if (videosResponse.videos.items[i].snippet.thumbnails.high.url) {
+      thumbnailUrl = videosResponse.videos.items[i].snippet.thumbnails.high.url
+    } else {
+      thumbnailUrl = '#'
+    }
+
+    if (videosResponse.videos.items[i].snippet.channelId) {
+      channelId = videosResponse.videos.items[i].snippet.channelId
+    } else {
+      channelId = 'NIL'
+    }
+
+    if (videosResponse.videos.items[i].snippet.channelTitle) {
+      channelTitle = videosResponse.videos.items[i].snippet.channelTitle
+    } else {
+      channelTitle = 'NIL'
+    }
+
+    if (videosResponse.videos.items[i].statistics.viewCount) {
+      viewCount = abbreviateNumber(videosResponse.videos.items[i].statistics.viewCount).toUpperCase()
+    } else {
+      viewCount = 'NIL'
+    }
+
+    if (videosResponse.videos.items[i].statistics.likeCount) {
+      likeCount = abbreviateNumber(videosResponse.videos.items[i].statistics.likeCount).toUpperCase()
+    } else {
+      likeCount = 'NIL'
+    }
+
+    if (videosResponse.videos.items[i].snippet.publishedAt) {
+      publishedAt = videosResponse.videos.items[i].snippet.publishedAt.slice(0, 10)
+    } else {
+      publishedAt = 'NIL'
+    }
+
     // Create card for display
-    document.getElementById('results').innerHTML += '<div class="card m-3 rounded-0" style="width: 20rem;"><div class="card-header p-0"><div class="progress rounded-0" style="height: 30px;"><div class="progress-bar text-dark fw-bolder ' + sentimentClass + '" role="progressbar" style="width: ' + sentimentPercentage + '%;" aria-valuenow="' + sentimentPercentage + '" aria-valuemin="0" aria-valuemax="100">' + sentimentText + '</div></div></div><a href="https://www.youtube.com/watch?v=' + videosResponse.videos.items[i].id + '" target="_blank"><img src="' + videosResponse.videos.items[i].snippet.thumbnails.high.url + '" class="card-img rounded-0" alt="' + videosResponse.videos.items[i].snippet.title + '"></a><div class="card-body"><h5 class="card-title fw-bolder"><a href="https://www.youtube.com/watch?v=' + videosResponse.videos.items[i].id + '" target="_blank">' + videosResponse.videos.items[i].snippet.title + '</a></h5><p class="card-text">' + truncateString(videosResponse.videos.items[i].snippet.description, 100) + '</p></div><div class="card-footer text-muted text-center"><a class="d-block" href="https://www.youtube.com/channel/' + videosResponse.videos.items[i].snippet.channelId + '" target="_blank">' + videosResponse.videos.items[i].snippet.channelTitle + '</a>' + abbreviateNumber(videosResponse.videos.items[i].statistics.viewCount).toUpperCase() + ' views &middot; ' + abbreviateNumber(videosResponse.videos.items[i].statistics.likeCount).toUpperCase() + ' likes &middot; ' + videosResponse.videos.items[i].snippet.publishedAt.slice(0, 10) + '</div>'
+    document.getElementById('results').innerHTML += '<div class="card m-3 rounded-0" style="width: 20rem;"><div class="card-header p-0"><div class="progress rounded-0" style="height: 30px;"><div class="progress-bar text-dark fw-bolder ' + sentimentClass + '" role="progressbar" style="width: ' + sentimentPercentage + '%;" aria-valuenow="' + sentimentPercentage + '" aria-valuemin="0" aria-valuemax="100">' + sentimentText + '</div></div></div><a href="https://www.youtube.com/watch?v=' + videosResponse.videos.items[i].id + '" target="_blank"><img src="' + thumbnailUrl + '" class="card-img rounded-0" alt="' + videoTitle + '"></a><div class="card-body"><h5 class="card-title fw-bolder"><a href="https://www.youtube.com/watch?v=' + videoId + '" target="_blank">' + videoTitle + '</a></h5><p class="card-text">' + truncateString(videoDescription, 100) + '</p></div><div class="card-footer text-muted text-center"><a class="d-block" href="https://www.youtube.com/channel/' + channelId + '" target="_blank">' + channelTitle + '</a>' + viewCount + ' views &middot; ' + likeCount + ' likes &middot; ' + publishedAt + '</div>'
   }
 
   // Create div for Load More button
