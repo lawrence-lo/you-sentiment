@@ -1,3 +1,6 @@
+const NumAbbr = require('number-abbreviate')
+const numAbbr = new NumAbbr()
+
 // Function to request data on submit
 document.getElementById('search').onsubmit = function (e) {
   const keyword = document.getElementById('keyword').value
@@ -111,13 +114,13 @@ function renderResults (keyword, orderBy, videosResponse) {
     }
 
     if (videosResponse.videos.items[i].statistics.viewCount) {
-      viewCount = abbreviateNumber(videosResponse.videos.items[i].statistics.viewCount).toUpperCase()
+      viewCount = numAbbr.abbreviate(videosResponse.videos.items[i].statistics.viewCount, 1)
     } else {
       viewCount = 'NIL'
     }
 
     if (videosResponse.videos.items[i].statistics.likeCount) {
-      likeCount = abbreviateNumber(videosResponse.videos.items[i].statistics.likeCount).toUpperCase()
+      likeCount = numAbbr.abbreviate(videosResponse.videos.items[i].statistics.likeCount, 1)
     } else {
       likeCount = 'NIL'
     }
@@ -176,23 +179,4 @@ function truncateString (str, num) {
     return str
   }
   return str.slice(0, num) + '...'
-}
-
-// Function to turn number into more readable format
-// Reference: https://stackoverflow.com/questions/10599933/convert-long-number-into-abbreviated-string-in-javascript-with-a-special-shortn
-function abbreviateNumber (value) {
-  let newValue = value
-  if (value >= 1000) {
-    const suffixes = ['', 'k', 'm', 'b', 't']
-    const suffixNum = Math.floor(('' + value).length / 3)
-    let shortValue = ''
-    for (let precision = 2; precision >= 1; precision--) {
-      shortValue = parseFloat((suffixNum != 0 ? (value / Math.pow(1000, suffixNum)) : value).toPrecision(precision))
-      const dotLessShortValue = (shortValue + '').replace(/[^a-zA-Z 0-9]+/g, '')
-      if (dotLessShortValue.length <= 2) { break }
-    }
-    if (shortValue % 1 != 0) shortValue = shortValue.toFixed(1)
-    newValue = shortValue + suffixes[suffixNum]
-  }
-  return newValue
 }
