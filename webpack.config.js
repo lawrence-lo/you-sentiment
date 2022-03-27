@@ -13,9 +13,11 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         use: []
       }, {
         test: /\.(scss)$/,
+        exclude: /node_modules/,
         use: [
           {
             loader: 'file-loader',
