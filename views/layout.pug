@@ -1,0 +1,28 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title YouSentiment | #{title}
+    link(rel='stylesheet', href='./css/styles.min.css')
+  body.d-flex.flex-column.min-vh-100
+    // Header with main nav
+    header#header
+      nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        .container-fluid
+          a.navbar-brand(href='/')
+            img(src='/images/logo.png', alt='Logo of YouSentiment', height='24')
+          button.navbar-toggler(type='button', data-bs-toggle='collapse', data-bs-target='#navbarNavAltMarkup', aria-controls='navbarNavAltMarkup', aria-expanded='false', aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+          #navbarNavAltMarkup.collapse.navbar-collapse
+            .navbar-nav.ms-auto
+              a.nav-link(href='/about') About
+
+    // Main
+    main#main
+      block layout-content
+
+    // Footer
+    footer#footer.text-center.mt-auto
+     p &copy; 2022 - YouSentiment
+    script(src='./js/bundle.js')

@@ -1,0 +1,24 @@
+
+// Reference: https://getbootstrap.com/docs/5.0/customize/sass/
+
+// Default variable overrides
+$font-family-sans-serif: 'Ubuntu', sans-serif;
+$link-decoration: none;
+$input-btn-focus-width: 0.1rem;
+$navbar-toggler-focus-width: 0;
+$navbar-light-toggler-border-color: transparent;
+
+// Reference: https://huemint.com/bootstrap-basic/#palette=d8ebe6-ffffff-173b6e-e52f3c-e5654a-f5e54d
+$primary: #e52f3c;
+$secondary: #e5654a;
+$success: #71c022;
+$info: #f5e54d;
+$warning: #fec98c;
+$danger: #fd106c;
+$light: #d8ebe6;
+$dark: #173b6e;
+$white: #ffffff;
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");

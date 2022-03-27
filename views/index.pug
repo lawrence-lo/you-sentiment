@@ -1,0 +1,19 @@
+extends layout
+block layout-content
+  .d-flex.flex-column.align-items-center
+    .container.text-center
+      h1.mt-5.fw-bold Discover YouTube Videos with Natural Language Processing
+      p.m-4 YouSentiment analyzes users&apos; comments to help indicate video quality
+    .container
+      form#search(name='search').w-100
+        .input-group.mb-3.rounded-pill
+          div
+            select#orderBy.form-select.rounded-0(name='orderBy')
+              option(value='relevance', selected='') Sort by relevance
+              option(value='date') Sort by upload date
+              option(value='videoCount') Sort by view count
+          input#keyword.form-control(type='text', name='keyword', placeholder='Keyword', aria-label='Keyword')
+          button#button-search.btn.btn-outline-secondary(type='submit', aria-label='Search').rounded-0
+            i.bi.bi-search
+    #results.d-flex.flex-row.flex-wrap.justify-content-center
+
