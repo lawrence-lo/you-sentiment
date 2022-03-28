@@ -45,6 +45,14 @@ app.get('/search', async (req, res) => {
     allResponses.nextPageToken = response.data.nextPageToken
   } catch (error) {
     console.error(error)
+
+    // Loop through the errors and check if it is related to quota limit
+    const errors = error.response.data.error.errors
+    for (let i = 0; i < errors.length; i++) {
+      if (errors[i].reason === 'quotaExceeded') {
+        res.sendStatus(503)
+      }
+    }
     res.sendStatus(500)
   }
 

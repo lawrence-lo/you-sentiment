@@ -32,8 +32,12 @@ document.getElementById('search').onsubmit = function (e) {
       renderResults(keyword, orderBy, videosResponse)
     }
 
+    if (this.readyState === 4 && this.status === 503) {
+      document.getElementById('results').innerHTML = '<p class="text-danger fw-bolder">We have reached the API quota limit. Please try again after midnight (Pacific Time).</p>'
+    }
+
     if (this.readyState === 4 && this.status === 500) {
-      document.getElementById('results').innerHTML = 'Something went wrong.'
+      document.getElementById('results').innerHTML = '<p class="text-danger fw-bolder">Oops, something went wrong.</p>'
     }
   }
 
